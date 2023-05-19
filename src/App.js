@@ -1,25 +1,53 @@
-import logo from './logo.svg';
 import './App.css';
+import { Counter } from './components/Counter';
+import { CountFixed } from './components/ClassConter.Fixed';
+import { ClickButton } from './components/ClickButton';
+import { ShowBlock } from './components/CreateBlock';
+import React from 'react';
 
-function App() {
+export function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Counter />
+      <CountFixed />
+      <ClickButton />
     </div>
   );
 }
 
-export default App;
+export class App extends React.Component{
+  constructor(props) {
+    super(props)
+    this.state = {
+      isVisibleBlock: true
+    };
+    this.ShowHideBlock = this.ShowHideBlock.bind(this)
+
+  }
+  ShowHideBlock() {
+    this.setState(
+      (state, props) => {
+        return {
+          isVisibleBlock : !state.isVisibleBlock
+        }
+      }
+        
+  )}
+
+  render() {
+    return (
+      
+        <div className="App">
+      <Counter />
+      <CountFixed />
+      <ClickButton />
+    
+        <button className='button' onClick={this.ShowHideBlock}>Click</button>
+      
+        { this.state.isVisibleBlock &&
+          <ShowBlock />
+        }
+      </div>
+    )
+  }
+}
